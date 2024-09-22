@@ -24,7 +24,7 @@ values = np.random.randint(10, 100, size=4)
 
 # Creates a DatetimeIndex named "dates" containing a sequence of
 # 10 dates starting from January 1, 2024
-dates = pd.date_range('2024-01-01', periods=10)
+dates = (pd.date_range('2024-01-01', periods=10)).strftime('%Y-%m-%d').tolist()
 
 # Generates an array of 10 random numbers from a standard normal distribution
 # Calculates the cumulative sum of these numbers and assign to "trend" variable
@@ -49,6 +49,24 @@ def bar_chart():
   plt.xlabel('Categories')
   # this shows the graph
   st.pyplot(plt)
+  # Clears the current figure
+  plt.clf()
 
 st.subheader("Bar Chart Demo")
 bar_chart()
+
+# Line Chart using Matplotlib
+def line_chart():
+    # Defines the data used for our line chart, the markers used, line style, and the color
+    plt.plot(dates, trend, marker='o', linestyle='-', color='b')
+    plt.title('Line Chart Example')
+    plt.xlabel('Date')
+    plt.ylabel('Trend Value')
+    # Rotates the dates shown in the x axis label (45 degrees) for readability
+    plt.xticks(rotation=45) # rotate in 45 degrees
+    # Display the plot in Streamlit
+    st.pyplot(plt)
+    plt.clf()
+
+st.subheader("Line Chart Demo")
+line_chart()
