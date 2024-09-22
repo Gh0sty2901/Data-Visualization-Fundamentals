@@ -70,3 +70,17 @@ def line_chart():
 
 st.subheader("Line Chart Demo")
 line_chart()
+
+# Pie Chart using Matplotlib
+def pie_chart():
+    colors = ['skyblue', 'lightgreen', 'salmon', 'orange']  # you can define colors using a list
+
+    # autopct defines the wedges or the numeric values shown in the pie chart
+    plt.pie(values, labels=categories, autopct='%1.1f%%', colors=colors)
+    plt.title('Pie Chart Example')
+    plt.show()
+    st.pyplot(plt)
+    plt.clf()
+    
+st.subheader("Pie Chart Demo")
+pie_chart()
