@@ -5,7 +5,7 @@ pandas
 seaborn
 altair
 wordcloud
-mpl_toolkits.mplot3d
+mpl_toolkits
 squarify
 networkx
 plotly
