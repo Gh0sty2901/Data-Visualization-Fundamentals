@@ -259,3 +259,33 @@ def surface_plot():
 
 st.header("3D Surface Plot Demo")
 surface_plot()
+
+# Network Graph using NetworkX
+
+import networkx as nx
+
+def network_graph():
+    # Generates a random graph using Erdős-Rényi model
+    # 10 - the number of nodes in the graph
+    # 0.5 - probability of an edge existing between any two nodes
+    G = nx.erdos_renyi_graph(10, 0.5)
+
+    # Calculates the position of nodes in the graph using force-directed algorithm
+    pos = nx.spring_layout(G)
+
+    # Draws the graph
+    # G - the graph object
+    # pos - the positions of nodes
+    # with_labels=True - displays node labels
+    # node_color='skyblue' - sets the color of nodes
+    # node_size=1000 - sets the size of the nodes
+    # edge_color='gray' - sets the color of the edges to gray
+    nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=1000, edge_color='gray')
+
+    plt.title('Network Graph Example')
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Network Graph Demo")
+network_graph()
+
