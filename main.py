@@ -206,3 +206,56 @@ def violin_plot():
 
 st.header("Violin Plot Demo")
 violin_plot()
+
+# Word Cloud using WordCloud library
+def word_cloud():
+    # A string variable containing random words
+    text = "Python Data Science Visualization WordCloud Example"
+
+    # width=800 - sets the width of the word cloud image to 800 pixels
+    # height=400 - sets the height of the word cloud image to 400 pixels
+    # background_color='white' - sets the background color of the word cloud to white
+    # interpolation='bilinear' - uses bilinear interpolation to smooth the edges
+    # of the words in the displayed image.
+    # plt.axis('off') - hides the axis lines and labels from the plot
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+    plt.imshow(wordcloud, interpolation='bilinear')
+
+    plt.axis('off')
+    plt.title('Word Cloud Example')
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Word Cloud Demo")
+word_cloud()
+
+# 3D Surface Plot using Matplotlib
+def surface_plot():
+    # creates a new figure object as the container for the plot
+    fig = plt.figure()
+
+    # adds a subplot to the figure with 3D projection.
+    # "111" means 1 row, 1 column, and this is the 1st subplot
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Creates an array "X" and "Y" both with 100 evenly spaced values between -5 and 5
+    X = np.linspace(-5, 5, 100)
+    Y = np.linspace(-5, 5, 100)
+
+    # Creates a meshgrid from "X" and "Y" arrays for 3D plotting
+    X, Y = np.meshgrid(X, Y)
+
+    # Calculates the "Z values" using the formula sin(sqrt(X^2 + Y^2))
+    Z = np.sin(np.sqrt(X**2 + Y**2))
+
+    # Creates a 3D surface plot using "X", "Y", and "Z" arrays
+    # cmap="viridis" - sets the color of the map
+    # other colors: plasma, inferno, magma, cividis, Greys, Blues, Greens, Oranges, Reds, etc.
+    ax.plot_surface(X, Y, Z, cmap='viridis')
+
+    plt.title('3D Surface Plot Example')
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("3D Surface Plot Demo")
+surface_plot()
