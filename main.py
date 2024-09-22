@@ -7,6 +7,9 @@ import altair as alt
 from wordcloud import WordCloud
 from mpl_toolkits.mplot3d import Axes3D
 import squarify
+import networkx as nx
+import plotly.graph_objects as go
+from io import StringIO
 
 st.title('Data Visualization Using Streamlit')
 st.markdown('`by JC Diamante`')
@@ -408,8 +411,6 @@ surface_plot()
 
 # Network Graph using NetworkX
 
-import networkx as nx
-
 def network_graph():
     # Generates a random graph using Erdős-Rényi model
     # 10 - the number of nodes in the graph
@@ -447,8 +448,6 @@ Network graphs represent relationships between entities using nodes and edges. T
 network_graph()
 
 # Sankey Diagram using Plotly
-
-import plotly.graph_objects as go
 
 def sankey_diagram():
     # go.Figure - Creates a Plotly figure object to hold the Sankey Diagram
@@ -506,8 +505,6 @@ https://www.kaggle.com/datasets/brendan45774/test-file/data
 df = pd.read_csv("datasets/tested.csv")
 
 st.write(df)
-
-from io import StringIO
 
 buffer = StringIO()
 df.info(buf=buffer)
