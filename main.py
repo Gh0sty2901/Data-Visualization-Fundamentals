@@ -97,3 +97,19 @@ def scatter_plot():
 
 st.header("Scatter Plot Demo")
 scatter_plot()
+
+# Histogram using Matplotlib
+def histogram():
+    # bins - define the intervals into which your data is divided or counted
+    # color - defines the actual color of the histogram bar
+    # edgecolor - defines the stroke color of the bar
+    plt.hist(x, bins=10, color='gray', edgecolor='black')
+    plt.title('Histogram Example')
+    plt.xlabel('Value')
+    plt.ylabel('Frequency')
+    plt.show()
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Histogram Demo")
+histogram()
