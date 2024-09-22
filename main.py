@@ -6,6 +6,7 @@ import seaborn as sns
 import altair as alt
 from wordcloud import WordCloud
 from mpl_toolkits.mplot3d import Axes3D
+import squarify
 
 st.title('Data Visualization Fundamentals - Lesson 4')
 st.write('by JC Diamante')
@@ -175,3 +176,33 @@ def bubble_chart():
 
 st.header("Bubble Chart Demo")
 bubble_chart()
+
+# Treemap using Squarify
+def treemap():
+    # squarify.plot(...) - used to create the treemap
+    # sizes=values - assigns the values data to determine the sizes of rectangles in the treemap
+    # label=categories - assigns the labels to the rectangles
+    # color - defines the color of the rectangles
+    # alpha=0.7 - controls the transparency of the rectangles
+    # 0 is fully transparent and 1 is opaque
+    # plt.axis('off') - hides the x and y axis of the plot
+    squarify.plot(sizes=values, label=categories, color=['red', 'green', 'blue', 'orange'], alpha=0.7)
+    plt.title('Treemap Example')
+    plt.axis('off')
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Treemap Demo")
+treemap()
+
+# Violin Plot using Seaborn
+def violin_plot():
+    # palette - specifies the color used in the box plot
+    # other palette colors: Set1, Set2, Set3, pastel, and muted
+    sns.violinplot(data=[x, y], palette="Set3")
+    plt.title('Violin Plot Example')
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Violin Plot Demo")
+violin_plot()
