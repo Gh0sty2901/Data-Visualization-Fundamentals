@@ -289,3 +289,233 @@ def network_graph():
 st.header("Network Graph Demo")
 network_graph()
 
+# Sankey Diagram using Plotly
+
+import plotly.graph_objects as go
+
+def sankey_diagram():
+    # go.Figure - Creates a Plotly figure object to hold the Sankey Diagram
+    # go.Sankey - Creates a Sankey diagram object within the figure
+    # node - Defines the properties of the nodes in the diagram
+      # pad - Specifies the padding between nodes (15 pixels)
+      # thickness - Sets the thickness of the nodes (20 pixels)
+      # line - defines the appearance of the border around nodes
+        # color - sets the border color to "black"
+        # width - sets the border width to 0.5 pixels
+      # label - provides the label for the nodes (A, B, C, and D)
+    # link - Defines the connections between the nodes
+
+      # target - specifies the target nodes of the links (using indices, 1, 2, 3)
+      # value - sets the flow values for each link (8, 4, 2)
+    fig = go.Figure(go.Sankey(
+        node=dict(pad=15, thickness=20, line=dict(color="black", width=0.5), label=["A", "B", "C", "D"]),
+        link=dict(source=[0, 1, 0], target=[1, 2, 3], value=[8, 4, 2])
+    ))
+
+    fig.update_layout(font_size=10)
+    return fig
+
+st.header("Sankey Diagram Demo")
+fig = sankey_diagram()
+st.plotly_chart(fig)
+
+
+########## USING ACTUAL DATASET
+
+st.title("Using an actual dataset 📊")
+
+st.markdown("""
+Throughout the previous code blocks, we were dealing with randomly generated values as our dummy data but how do we deal with actual datasets?  
+  
+**Dataset:** Titanic Dataset (Kaggle)  
+https://www.kaggle.com/datasets/brendan45774/test-file/data  
+  
+`NOTE:` Check the slides first **"Lesson 4 - Data Visualization Fundamentals"** to see how to upload local files to Google Colab.
+
+""")
+
+# Read our CSV dataset.
+df = pd.read_csv("datasets/tested.csv")
+
+st.write(df)
+
+st.write(df.info()) # Show the relevant information in the dataset such as Data Types
+st.write("Show the relevant information in the dataset such as Data Types")
+
+st.write(df.isna().sum()) # Show the null values
+st.write("Show the null values")
+
+st.write(df.describe()) # Generate Descriptive Statistics
+st.write("Generate Descriptive Statistics")
+
+st.markdown("""
+
+`count` Number of non-null or non-missing values in a column.  
+`mean:` The calculated mean or average of the column.  
+`std (Standard Deviation):` Values in this row shows how much the values in their respective columns deviate from the mean (average value)  
+`min:` Smallest (minimum) number in the column.  
+`25% (1st Quartile):` This is the 25th percentile. The values represented in this row implies that 25% of the data points based on their respective rows are less than or equal (<=) its value.  
+`50% (Median):` This is the 50th percentile. The values represented in this row are below (<) its value and half (50%) are above (>).  
+`75% (3rd Quartile):` This is the 75th percentile. The values represented in this row are less than or equal (<=) to its value.  
+`max:` Largest (maximum) number in the column.  
+
+""")
+
+st.write("""
+
+Based on the dataset provider these are the description for the columns.  
+  
+`PassengerId`  
+Passenger number  
+`Survived`  
+0 = Dead 1 = Alive  
+`Pclass`  
+1 = First class 2 = Second class 3 = Third class  
+`Name`  
+Name of passenger  
+`Sex`  
+Gender  
+`Age`  
+Age of passenger  
+`SibSp`  
+Number of siblings  
+
+### `Observations`
+
+We can see that the categorical values are:
+**pclass**, **sex**, and **survived**
+
+Numerical values are:
+**age**, **fare**, **sibsp**, and **parch**
+
+""")
+
+st.write(df['Survived'].value_counts()) # Show the count of the survived and deceased passengers
+st.write("Show the count of the survived and deceased passengers")
+
+total_passenger_count = 266 + 152
+
+st.write(f"Total Passenger Count: {total_passenger_count}")
+
+
+# We can use pie chart to show the margin between the survived and the deceased passengers
+def pie_chart_survived_deceased():
+    survived = df['Survived'].value_counts()
+    colors = ['salmon', 'lightgreen']
+    plt.pie(survived, labels = ['Deceased', 'Survived'], autopct='%1.1f%%', colors=colors)
+    plt.title('Titanic Survival Rate')
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Passengers Survival Rate")
+pie_chart_survived_deceased()
+st.markdown("We can observe the proportion of passengers who survived and those who did not through our pie chart. There's a **36.4%** survival rate.")
+
+# We can use pie chart to show the margin between the passengers based on their class
+def pie_chart_passenger_based_on_sex():
+
+    sex = df['Sex'].value_counts()
+    colors = ['skyblue', 'pink']
+    plt.pie(sex, labels = ['male', 'female'], autopct='%1.1f%%', colors=colors)
+    plt.title('Titanic Passenger Sex Distribution')
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Passengers Sex Distribution")
+pie_chart_passenger_based_on_sex()
+st.markdown("Amongst the passengers, majority were **Male accounting for 63.6%** of the total passengers (266 total). **Female passengers on the other hand are 36.4%** of the total passengers (152 total).")
+
+# We can use pie chart to show the margin between the passengers based on their class
+def pie_chart_classes_distribution():
+
+    survived = df['Pclass'].value_counts()
+    colors = ['skyblue', 'lightgreen', 'salmon']
+    plt.pie(survived, labels = ['3rd', '1st', '2nd'], autopct='%1.1f%%', colors=colors)
+    plt.title('Titanic Classes Distribution')
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Passenger Classes Distribution")
+pie_chart_classes_distribution()
+st.markdown("Based on the Titanic Classes Distribution pie chart, we can see that majority of the passengers are **Class 3 accounting for 52.2%** of the total passengers. This is followed by **Class 1 passengers with 25.6%**, and **Class 2 with 22.2%**.")
+
+# How about the survival based on sex? We can display that using Bar Chart
+def bar_plot_survival_based_on_sex():
+    plt.figure(figsize=(7, 7)) # define the width and height of the graph
+
+    ax = sns.countplot(x='Sex', hue='Survived', data=df)
+    plt.title('Passenger Sex vs. Survival')
+
+    # You can use this to show the actual count of each bars
+    for p in ax.patches:
+        ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='center', xytext=(0, 10), textcoords='offset points')
+
+    st.pyplot(plt)
+    plt.clf()
+        
+st.header("Passenger Sex vs Survival")
+bar_plot_survival_based_on_sex()
+st.markdown("It is evident from the bar graph that **Female passengers had the highest survival rate** (152) while **none of the male passengers survived** the tragic event, 266 deceased, and 0 survivors.")
+
+
+# Now we use a bar chart to show the survival rate of the passengers based on their class
+def bar_plot_survival_based_on_class():
+    sns.countplot(x='Pclass', hue='Survived', data=df)
+    plt.title('Passenger Class vs. Survival')
+    plt.xlabel('Passenger Class')
+    plt.ylabel('Count')
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Passenger Class vs Survival")
+bar_plot_survival_based_on_class()
+
+# Add double spaces ("  ") after the line you want to add a line break.
+st.markdown(""" 
+1 - First Class  
+2 - Second Class  
+3 - Third Class  
+  
+We can see from the observations that the **third class** passengers had the **highest deceased rate** compared to the other 2 classes **but they also had the highest survival rate** amongst the 2 other classes.  
+  
+**First-class** passengers tend to **have higher proportion of survivors** compared to the other two classes. This may reflect the socio-economic factor in survival chances.
+""")
+
+# Let's check how the Age of the passengers are distributed using Histogram
+def histogram_age_distribution():
+    sns.histplot(df['Age'], bins=30, color="salmon")
+    plt.title('Passenger Age Distribution')
+    plt.xlabel('Passenger Age')
+    plt.ylabel('Count')
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Passenger Age Distribution")
+histogram_age_distribution()
+st.markdown("We can see from the graph that **peak passenger age ranges between 20 and 30**. It is also notable that there are **10 infants in in the passengers** which are below 1 year of age.")
+
+st.header("Conclusion")
+st.subheader("Insights from our Data Visualization and Data Analysis: 📊")
+st.markdown("""
+
+1. **Survival Rate:**  
+- Survival rate of the passengers is fairly low accounting for **36.4%**  
+- Almost **two-thirds** of the passengers did not survive.  
+  
+2. **Gender Distribution and Survival:**  
+- Majority of the passengers were "Male" which is made up of **63.6% (266)** of the total passengers. Females on the other hand accounts for **36.4% (152)** of the total passengers  
+- Even though majority of the passengers are "Male", "Female" passengers had higher survival rate **152** compared to **0** survival rate of male passengers. This can be related to the evacuation policies such as "women and children first".  
+  
+3. **Class Distribution and Survival:**  
+- The largest proportion of passengers belonged to the third class comprising of **52.2%** based on the total passengers. This is followed by first class with **25.6%**, and **22.2%** in second class.  
+- Another important observation is that **third-class passengers tend to have the highest total deceased rate** but **they also had the highest absolute number of survivors** which highlights the class disparity in survival.  
+  
+4. **Age Distribution:**  
+- The age of the passengers **peaks around between 20 to 30 years old**.  
+- **10 infants** were also on-board who were under 1 year of age. This indicates a wide range of age among the passengers  
+  
+5. **Survival by Class:**  
+- **1st class passengers** tend to have the **higher proportion of survivors** after comparing them to the other two classes, this may be attributed to the socio-economic factor playing a vital role in the survival chances during the event.  
+- **3rd Class passengers*** had the **highest deceased rate** after comparing them to the other two classes. Despite this, they also had the highest survival rate.  
+
+""")
