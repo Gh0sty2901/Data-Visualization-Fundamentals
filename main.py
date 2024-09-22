@@ -35,6 +35,8 @@ trend = np.random.randn(10).cumsum()
 x = np.random.randn(100)
 y = np.random.randn(100)
 
+heatmap_data = np.random.rand(10, 10) # 10x10 matrix
+
 # Bar Chart using Matplotlib
 def bar_chart():
   colors = ['skyblue', 'lightgreen', 'salmon', 'orange']  # you can define colors using a list
@@ -113,3 +115,21 @@ def histogram():
 
 st.header("Histogram Demo")
 histogram()
+
+# Heatmap using Seaborn
+# Note: If annotations are only visible on the first row,
+# try upgrading your Seaborn library using `pip install seaborn --upgrade`
+
+def heatmap():
+    # annot=True - defines the values of the heatmap displayed on the plot
+    # cmap - sets the color scheme to "coolwarm",
+    # other colors: viridis, plasma, inferno, magma, cividis, Blues, Greens, Reds, etc.
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(heatmap_data, annot=True, cmap='coolwarm')
+    plt.title('Heatmap Example')
+    plt.show()
+    st.pyplot(plt)
+    plt.clf()
+    
+st.header("Heatmap Demo")
+heatmap()
