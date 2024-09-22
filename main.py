@@ -52,7 +52,7 @@ def bar_chart():
   # Clears the current figure
   plt.clf()
 
-st.subheader("Bar Chart Demo")
+st.header("Bar Chart Demo")
 bar_chart()
 
 # Line Chart using Matplotlib
@@ -68,7 +68,7 @@ def line_chart():
     st.pyplot(plt)
     plt.clf()
 
-st.subheader("Line Chart Demo")
+st.header("Line Chart Demo")
 line_chart()
 
 # Pie Chart using Matplotlib
@@ -81,6 +81,19 @@ def pie_chart():
     plt.show()
     st.pyplot(plt)
     plt.clf()
-    
-st.subheader("Pie Chart Demo")
+
+st.header("Pie Chart Demo")
 pie_chart()
+
+# Scatter Plot using Matplotlib
+def scatter_plot():
+    plt.scatter(x, y, color='purple')
+    plt.title('Scatter Plot Example')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.show()
+    st.pyplot(plt)
+    plt.clf()
+
+st.header("Scatter Plot Demo")
+scatter_plot()
